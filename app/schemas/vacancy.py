@@ -5,6 +5,7 @@ from pydantic import BaseModel, ConfigDict
 
 
 class VacancyBase(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     title: str
     timetable_mode_name: str
     tag_name: str
