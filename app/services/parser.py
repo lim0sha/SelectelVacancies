@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 
 API_URL = "https://api.selectel.ru/proxy/public/employee/api/public/vacancies"
 
-
 async def fetch_page(client: httpx.AsyncClient, page: int) -> ExternalVacanciesResponse:
     response = await client.get(
         API_URL,
@@ -40,7 +39,7 @@ async def parse_and_store(session: AsyncSession) -> int:
                         "title": item.title,
                         "timetable_mode_name": item.timetable_mode.name,
                         "tag_name": item.tag.name,
-                        "city_name": item.city.name.strip(),
+                        "city_name": (c := item.city) and c.name.strip() or None,
                         "published_at": item.published_at,
                         "is_remote_available": item.is_remote_available,
                         "is_hot": item.is_hot,
