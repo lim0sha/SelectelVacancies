@@ -38,7 +38,10 @@ async def get_vacancy_endpoint(
 ) -> VacancyRead:
     vacancy = await get_vacancy(session, vacancy_id)
     if not vacancy:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Vacancy with id {vacancy_id} not found"
+        )
     return vacancy
 
 
@@ -64,7 +67,10 @@ async def update_vacancy_endpoint(
 ) -> VacancyRead:
     vacancy = await get_vacancy(session, vacancy_id)
     if not vacancy:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Vacancy with id {vacancy_id} not found"
+        )
     if payload.external_id is not None:
         existing = await get_vacancy_by_external_id(session, payload.external_id)
         if existing and existing.id != vacancy_id:
@@ -81,5 +87,8 @@ async def delete_vacancy_endpoint(
 ) -> None:
     vacancy = await get_vacancy(session, vacancy_id)
     if not vacancy:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Vacancy with id {vacancy_id} not found"
+        )
     await delete_vacancy(session, vacancy)
