@@ -3,6 +3,7 @@ import logging
 from fastapi import FastAPI
 
 from app.api.v1.router import api_router
+from app.config.policy import configurate_cors_policy
 from app.core.logging import setup_logging
 from app.db.session import async_session_maker
 from app.services.parser import parse_and_store
@@ -12,6 +13,8 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Selectel Vacancies API")
 app.include_router(api_router)
+
+configurate_cors_policy(app)
 
 setup_logging()
 
