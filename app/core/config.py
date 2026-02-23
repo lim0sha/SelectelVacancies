@@ -9,6 +9,8 @@ class Settings(BaseSettings):
         case_sensitive=False,
     )
 
+    external_vacancies_api_url: str
+
     database_url: str = Field(
         "postgresql+asyncpg://postgres:postgres@db:5432/postgres",
         validation_alias="DATABASE_URL",
