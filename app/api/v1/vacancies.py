@@ -3,7 +3,7 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database import get_session
+from app.database.session import get_session
 from app.crud.vacancy import (
     create_vacancy,
     delete_vacancy,
