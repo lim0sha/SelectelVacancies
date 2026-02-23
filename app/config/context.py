@@ -5,7 +5,7 @@ from typing import AsyncGenerator, Optional
 from fastapi import FastAPI
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-from app.database.session import async_session_maker, close_db_connection
+from app.db.session import async_session_maker, close_db_connection
 from app.services.parser import parse_and_store
 from app.services.scheduler import create_scheduler
 
