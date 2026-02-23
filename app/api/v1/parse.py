@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.database.session import get_session
+from app.database import get_session
 from app.schemas.parse import ParseData
 from app.services.parser import parse_and_store
 
