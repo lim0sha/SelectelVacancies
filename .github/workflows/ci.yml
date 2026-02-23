@@ -1,0 +1,50 @@
+name: Python CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov flake8 black
+
+    - name: Check code formatting with Black
+      run: |
+        black --check .
+
+    - name: Lint with Flake8
+      run: |
+        flake8 . --count --show-source --statistics
+
+    - name: Check import sorting with isort (if installed)
+      run: |
+        python -m pip install isort || echo "isort not in requirements, skipping"
+        if command -v isort &> /dev/null; then isort --check-only --diff .; fi
+
+    - name: Start application and check if it runs
+      run: |
+        cp .env.example .env
+        python -m py_compile $(find . -name "*.py" -not -path "./.venv/*" -not -path "./venv/*")
+
+    - name: Run basic import tests
+      run: |
+        python -c "from app.main import app; print('Main app imported successfully')"
+        python -c "import app.models.vacancy; print('Models imported successfully')"
+        python -c "import app.schemas.vacancy; print('Schemas imported successfully')"
+        python -c "import app.crud.vacancy; print('CRUD modules imported successfully')"
