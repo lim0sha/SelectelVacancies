@@ -1,3 +1,9 @@
+# Отчет по проделанной работе
+
+Документ с отчетом - [selectest-api-debug-report.pdf](docs/selectest-api-debug-report.pdf)
+
+---
+
 # Selectel Vacancies API
 
 FastAPI-приложение для парсинга публичных вакансий Selectel, хранения в PostgreSQL и предоставления CRUD API.
